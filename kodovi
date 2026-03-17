@@ -1,0 +1,24 @@
+# Load file
+iris_data <- read.csv("iris.csv")
+
+# Provjeri prvih par redova
+head(iris_data)
+
+# Provjeri strukturu podataka
+str(iris_data)
+
+# Jednostavna linearna regresija
+model <- lm(petal_length ~ sepal_length, data = iris_data)
+
+# Rezultati
+summary(model)
+
+# Plot: scatter + regresiona linija
+library(ggplot2)
+
+ggplot(iris_data, aes(x = sepal_length, y = petal_length)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, color="blue") +
+  labs(title = "Linear Regression: petal_length ~ sepal_length",
+       x = "Sepal Length",
+       y = "Petal Length")
