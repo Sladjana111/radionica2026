@@ -1,24 +1,71 @@
-# Load file
+# Priprema
+
+# Load package
+library(ggplot2)
+
+#Load data
 iris_data <- read.csv("iris.csv")
 
-# Provjeri prvih par redova
+# Pregled podataka
 head(iris_data)
-
-# Provjeri strukturu podataka
 str(iris_data)
 
-# Jednostavna linearna regresija
+# ==========================
+# 2 EDA
+# ==========================
+# Varijable
+summary(iris_data$petal_length)
+
+# Histogram
+ggplot(iris_data, aes(x = petal_length)) +
+  geom_histogram(bins = 20, fill = "blue", color = "black") +
+  labs(title = "Histogram of Petal Length")
+
+# Boxplot po vrstama
+ggplot(iris_data, aes(x = species, y = petal_length)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(title = "Petal Length by Species")
+
+# QQ plot (normalnost)
+qqnorm(iris_data$petal_length)
+qqline(iris_data$petal_length, col = "red")
+
+# ==========================
+# 3 Povezanost
+# ==========================
+# Scatter plot
+ggplot(iris_data, aes(x = sepal_length, y = petal_length)) +
+  geom_point() +
+  labs(title = "Relationship between sepal_length and petal_length",
+       x = "Sepal Length",
+       y = "Petal Length")
+
+# Koeficijent korelacije
+cor_value <- cor(iris_data$sepal_length, iris_data$petal_length)
+cor_value
+
+# ==========================
+# 4 REGRESIJA
+# ==========================
 model <- lm(petal_length ~ sepal_length, data = iris_data)
 
 # Rezultati
 summary(model)
 
-# Plot: scatter + regresiona linija
-library(ggplot2)
-
+# Graficki prikaz
 ggplot(iris_data, aes(x = sepal_length, y = petal_length)) +
   geom_point() +
-  geom_smooth(method = "lm", se = TRUE, color="blue") +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
   labs(title = "Linear Regression: petal_length ~ sepal_length",
        x = "Sepal Length",
        y = "Petal Length")
+
+# ==========================
+#5 DIJAGNOSTIKA MODELA
+# ==========================
+# Osnovni dijagnostički grafici
+par(mfrow = c(2,2))
+plot(model)
+
+
+par(mfrow = c(1,1))
