@@ -1,8 +1,4 @@
-install.packages("tidyverse")
 install.packages("ggplot2")
 install.packages("dplyr")
 install.packages("readr")
 install.packages("broom")
-install.packages("car")
-install.packages("lmtest")
-install.packages("sandwich")
